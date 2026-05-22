@@ -52,7 +52,8 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="font-body-lg text-on-surface-variant max-w-2xl text-lg md:text-xl drop-shadow-md bg-surface/10 p-4 rounded-xl backdrop-blur-sm border border-white/5"
         >
-          Building machine learning solutions, AI-powered dashboards, and analytics systems that solve real-world business problems. Let's explore how I can help your organization harness the power of data for strategic advantage.
+          {/* FIXED: Changed Let's to Let&apos;s to resolve the react/no-unescaped-entities rule */}
+          Building machine learning solutions, AI-powered dashboards, and analytics systems that solve real-world business problems. Let&apos;s explore how I can help your organization harness the power of data for strategic advantage.
         </motion.p>
 
         <motion.div 
