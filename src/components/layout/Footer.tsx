@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-center py-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto gap-8">
         <div className="font-display-lg text-primary text-[24px]">RK</div>
         <div className="text-on-surface-variant font-label-caps text-label-caps text-center md:text-left">
-          © {new Date().getFullYear()} ROUSHAN KUMAR MOURYA - DATA-DRIVEN STRATEGY
+          Designed & built by Roushan Kumar Mourya © 2026
         </div>
         <div className="flex gap-8">
           <a

@@ -19,10 +19,10 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Services', href: '#services' },
-    { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -30,7 +30,7 @@ export default function Navbar() {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4 bg-surface/80 backdrop-blur-xl border-b border-white/10' : 'py-6 bg-transparent'}`}>
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center">
         <a href="#home" className="flex items-center gap-3">
-          <Image src="/profile.png" alt="Roushan Mourya" width={40} height={40} className="rounded-full object-cover ring-2 ring-primary" priority />
+          <Image src="/Profile.png" alt="Roushan Mourya" width={40} height={40} className="rounded-full object-cover ring-2 ring-primary" priority />
           <span className="font-display-lg text-primary tracking-tighter drop-shadow-[0_0_8px_rgba(208,188,255,0.4)] text-[18px] hidden md:inline">Roushan</span>
         </a>
         

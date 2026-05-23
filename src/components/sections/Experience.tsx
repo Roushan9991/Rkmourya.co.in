@@ -6,6 +6,16 @@ import Image from 'next/image';
 
 const experiences = [
   {
+    role: "Data & Analytics Intern",
+    company: "ITC LIMITED",
+    duration: "May 2026 - Jun 2026",
+    points: [
+      "Analysed the Wheat Buying data across MP and suggested low buying area with high quality of grains.",
+      "Setup Automatic Measuring Machine for grains quality at procurement center which increase the efficiency of buying",
+      "Built dashboard for tracking real time buying data across different location about quality and quantity and rejection of wheat"
+    ]
+  },
+  {
     role: "Product Solutioning Consultant",
     company: "DARWINBOX",
     duration: "Apr 2024 - Sep 2024",
@@ -78,9 +88,17 @@ export default function Experience() {
                     <Image 
                       src="/darwinbox.svg" 
                       alt="Darwinbox Logo" 
-                      width={120} 
-                      height={40}
+                      width={40} 
+                      height={20}
                       className="h-12 w-auto shrink-0"
+                    />
+                  ) : exp.company === "ITC LIMITED" ? (
+                    <Image
+                      src="/Itc_logo_black_sharp.png"
+                      alt="ITC Logo"
+                      width={120}
+                      height={60}
+                      className="h-20 w-50 shrink-0 object-contain mix-blend-screen"
                     />
                   ) : (
                     <Briefcase className="w-12 h-12 text-white/10 group-hover:text-primary transition-all duration-500 hidden sm:block" />

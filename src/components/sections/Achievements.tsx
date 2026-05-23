@@ -32,11 +32,19 @@ export default function Achievements() {
             </div>
             <div className="relative z-10">
               <span className="font-label-caps text-label-caps text-primary">SPORTSMANSHIP</span>
-              <h3 className="font-headline-md text-on-surface mt-4">Silver Medalist</h3>
-              <p className="text-body-lg text-on-surface-variant mt-2 font-bold">All India Inter-NIT Kabaddi Championship</p>
+              <h3 className="font-headline-md text-on-surface mt-4">InterNIT Certificate</h3>
+              <p className="text-body-lg text-on-surface-variant mt-2 font-bold">Got Silver Medal in Inter-NIT Kabaddi Tournament.</p>
               <p className="text-body-md text-on-surface-variant/60 mt-4 italic border-l-2 border-primary/50 pl-4">
-                Demonstrating teamwork, discipline, and strategic grit under pressure.
+                Awarded for teamwork, resilience, and strategic play during the Inter-NIT Tournament held at NIT Surathkal.
               </p>
+              <div className="mt-8">
+                <div className="text-label-caps text-[10px] tracking-widest text-on-surface-variant mb-3">CERTIFICATE PREVIEW</div>
+                <div className="h-72 overflow-hidden rounded-2xl border border-white/10 bg-background">
+                  <object data="/InterNit certificate.pdf" type="application/pdf" className="h-full w-full">
+                    <p className="p-6 text-on-surface-variant">Inline PDF preview is not supported by your browser. <a href="/InterNit certificate.pdf" className="text-primary underline">Download the certificate</a>.</p>
+                  </object>
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -52,18 +60,23 @@ export default function Achievements() {
             </div>
             <div className="relative z-10">
               <span className="font-label-caps text-label-caps text-secondary">CERTIFICATION</span>
-              <h3 className="font-headline-md text-on-surface mt-4">Google Data Analytics</h3>
-              <p className="text-body-lg text-on-surface-variant mt-2 font-bold">Professional Certification — Coursera</p>
+              <h3 className="font-headline-md text-on-surface mt-4">Google Advanced Data Analytics Certification</h3>
+              <p className="text-body-lg text-on-surface-variant mt-2 font-bold">Professional Certification - Coursera</p>
               <p className="text-body-md text-on-surface-variant/60 mt-4 border-l-2 border-secondary/50 pl-4">
-                End-to-end data processing, analysis, and visualization mastery.
+                Build Practical Skills in Advanced Analytics, Predictive Modeling, Data Visualization, and Business Insights Generation.
               </p>
-              
-              <div className="mt-6 flex flex-wrap gap-2">
-                {['SQL', 'Power BI', 'Advanced Excel', 'Python'].map(cert => (
-                  <span key={cert} className="text-[10px] font-label-caps bg-surface-bright px-2 py-1 rounded text-on-surface-variant">
-                    {cert}
-                  </span>
-                ))}
+              <div className="mt-4">
+                <a href="https://www.credly.com/badges/d3e0fcdb-74b2-4791-9333-c24547fcc73a" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-semibold hover:text-secondary transition-colors">
+                  Credly Badge Link
+                </a>
+              </div>
+              <div className="mt-8">
+                <div className="text-label-caps text-[10px] tracking-widest text-on-surface-variant mb-3">CERTIFICATE PREVIEW</div>
+                <div className="h-72 overflow-hidden rounded-2xl border border-white/10 bg-background">
+                  <object data="/coursera.pdf" type="application/pdf" className="h-full w-full">
+                    <p className="p-6 text-on-surface-variant">Inline PDF preview is not supported by your browser. <a href="/coursera.pdf" className="text-secondary underline">Download the certificate</a>.</p>
+                  </object>
+                </div>
               </div>
             </div>
           </motion.div>

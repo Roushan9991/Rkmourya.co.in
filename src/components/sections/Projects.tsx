@@ -19,7 +19,7 @@ const projects = [
     title: "Wildfire Risk Prediction using Ridge Regression",
     category: "PREDICTIVE ANALYTICS",
     description: "An end-to-end Machine Learning project that predicts wildfire risk from environmental and fire weather indicators. Built using Python, Flask, and Ridge Regression with real-time prediction capability and cloud deployment on Vercel.",
-    image: "/Widfire prediction.jpg",
+    image: "/widfire prediction.jpg",
     tech: ["Python", "Scikit-Learn", "Pandas","Ridge Regression","Jupyter Notebook","StandardScaler","Model Evaluation","Vercel","GitHub"],
     github: "https://github.com/Roushan9991/Wildfire-Risk-Prediction-using-Ridge-Regression/blob/main/README.md",
     live: "https://weather-prediction-using-linear-reg.vercel.app/"
