@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial, OrbitControls, Html } from '@react-three/drei';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import ErrorBoundary from '../ErrorBoundary';
 
@@ -18,11 +18,7 @@ const skills = [
   { name: 'Powerpoint', color: '#dbb8ff' },
   { name: 'Tableau', color: '#a078ff' },
   { name: 'R Programming', color: '#00cbe6' },
-  { name: 'NLP', color: '#6d3bd7' },
-  { name: 'JIRA', color: '#d0bcff' },
-  { name: 'MATLAB', color: '#efdbff' },
-  { name: 'Deep Learning', color: '#5f3d7c' },
-  { name: 'Artificial Intelligence', color: '#855ea7' }
+  { name: 'NLP', color: '#6d3bd7' }
 ];
 
 interface Skill {
@@ -30,30 +26,11 @@ interface Skill {
   color: string;
 }
 
-function OrbitingNode({ skill, index, total }: { skill: Skill, index: number, total: number }) {
-  const groupRef = useRef<THREE.Group>(null);
-  
-  // Calculate position on a sphere
-  const phi = Math.acos(-1 + (2 * index) / total);
-  const theta = Math.sqrt(total * Math.PI) * phi;
-  
-  const radius = 3;
-  const x = radius * Math.cos(theta) * Math.sin(phi);
-  const y = radius * Math.sin(theta) * Math.sin(phi);
-  const z = radius * Math.cos(phi);
-
-  useFrame(({ clock }) => {
-    if (groupRef.current) {
-      // Rotate the whole group slowly to simulate orbit
-      groupRef.current.position.x = x * Math.cos(clock.getElapsedTime() * 0.2) - z * Math.sin(clock.getElapsedTime() * 0.2);
-      groupRef.current.position.z = z * Math.cos(clock.getElapsedTime() * 0.2) + x * Math.sin(clock.getElapsedTime() * 0.2);
-    }
-  });
-
+function OrbitingNode({ skill, position }: { skill: Skill, position: [number, number, number] }) {
   return (
-    <group ref={groupRef} position={[x, y, z]}>
+    <group position={position}>
       <mesh>
-        <sphereGeometry args={[0.2, 16, 16]} />
+        <sphereGeometry args={[0.18, 12, 12]} />
         <meshStandardMaterial color={skill.color} emissive={skill.color} emissiveIntensity={1} />
       </mesh>
       <Html distanceFactor={10} zIndexRange={[100, 0]} center>
@@ -70,13 +47,13 @@ function CoreSphere() {
 
   useFrame(({ clock }) => {
     if (sphereRef.current) {
-      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.5;
-      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.5;
+      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.4;
+      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.4;
     }
   });
 
   return (
-    <Sphere ref={sphereRef} args={[1, 32, 32]}>
+    <Sphere ref={sphereRef} args={[0.8, 16, 16]}>
       <MeshDistortMaterial
         color="#3c0091"
         attach="material"
@@ -91,11 +68,57 @@ function CoreSphere() {
   );
 }
 
+function RotatingSkillGroup({ positions }: { positions: [number, number, number][] }) {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.2;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {skills.map((skill, index) => (
+        <OrbitingNode key={skill.name} skill={skill} position={positions[index]} />
+      ))}
+    </group>
+  );
+}
+
 export default function SkillsVisualizer() {
   const [isReady, setIsReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [pixelRatio, setPixelRatio] = useState(1);
 
   useEffect(() => {
     setIsReady(true);
+
+    const match = window.matchMedia('(max-width: 767.98px)');
+    const update = () => {
+      setIsMobile(match.matches);
+      setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+
+    update();
+    match.addEventListener('change', update);
+    return () => match.removeEventListener('change', update);
+  }, []);
+
+  const positions = useMemo(() => {
+    const total = skills.length;
+    const radius = 3;
+
+    return skills.map((_, index) => {
+      const phi = Math.acos(-1 + (2 * index) / total);
+      const theta = Math.sqrt(total * Math.PI) * phi;
+
+      return [
+        radius * Math.cos(theta) * Math.sin(phi),
+        radius * Math.sin(theta) * Math.sin(phi),
+        radius * Math.cos(phi),
+      ] as [number, number, number];
+    });
   }, []);
 
   if (!isReady) {
@@ -107,21 +130,17 @@ export default function SkillsVisualizer() {
       <ErrorBoundary>
         <Canvas
           camera={{ position: [0, 0, 8], fov: 50 }}
-          gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: true }}
-          onCreated={({ gl }) => {
-            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-          }}
+          dpr={pixelRatio}
+          gl={{ antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
         >
           <ambientLight intensity={0.5} />
           <directionalLight position={[10, 10, 5]} intensity={1} />
           
           <CoreSphere />
           
-          {skills.map((skill, index) => (
-            <OrbitingNode key={skill.name} skill={skill} index={index} total={skills.length} />
-          ))}
+          <RotatingSkillGroup positions={positions} />
           
-          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+          <OrbitControls enableZoom={false} enableRotate={!isMobile} autoRotate={!isMobile} autoRotateSpeed={0.5} />
         </Canvas>
       </ErrorBoundary>
     </div>

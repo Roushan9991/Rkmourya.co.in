@@ -29,7 +29,7 @@ export default function Skills() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative glass-panel rounded-3xl border-primary/20 p-4"
+          className="hidden md:block relative glass-panel rounded-3xl border-primary/20 p-4"
         >
           <SkillsVisualizer />
         </motion.div>
