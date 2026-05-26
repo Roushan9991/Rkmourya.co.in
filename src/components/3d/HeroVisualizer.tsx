@@ -11,8 +11,8 @@ function AnimatedSphere({ isMobile }: { isMobile: boolean }) {
 
   useFrame(({ clock }) => {
     if (sphereRef.current) {
-      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.15;
-      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.2;
+      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.2;
+      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.3;
     }
   });
 
@@ -39,7 +39,7 @@ function FloatingNodes({ isMobile }: { isMobile: boolean }) {
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.1;
     }
   });
 
@@ -62,7 +62,7 @@ function FloatingNodes({ isMobile }: { isMobile: boolean }) {
           <meshStandardMaterial
             color={Math.random() > 0.5 ? '#5de6ff' : '#d0bcff'}
             emissive={Math.random() > 0.5 ? '#5de6ff' : '#d0bcff'}
-            emissiveIntensity={1.5}
+            emissiveIntensity={isMobile ? 1.5 : 2}
             toneMapped={false}
           />
         </mesh>
@@ -97,12 +97,12 @@ export default function HeroVisualizer({ className = "w-full min-h-[400px] md:mi
         <ErrorBoundary>
           <Canvas
             camera={{ position: [0, 0, 5], fov: 45 }}
-            // Optimize GPU/shading workload on mobile by limiting pixel density mapping to 1x
-            dpr={isMobile ? 1 : 2}
+            // Optimize GPU/shading workload on mobile, keep original high density for desktop
+            dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 2)}
             gl={{ 
               antialias: !isMobile, 
               powerPreference: 'high-performance', 
-              preserveDrawingBuffer: false 
+              preserveDrawingBuffer: true 
             }}
           >
             <ambientLight intensity={0.5} />
@@ -119,9 +119,9 @@ export default function HeroVisualizer({ className = "w-full min-h-[400px] md:mi
               factor={4} 
               saturation={0} 
               fade 
-              speed={0.5} 
+              speed={isMobile ? 0.5 : 1} 
             />
-            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.3} />
+            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={isMobile ? 0.3 : 0.5} />
           </Canvas>
         </ErrorBoundary>
       </div>
