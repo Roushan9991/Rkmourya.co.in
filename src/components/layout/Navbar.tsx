@@ -27,13 +27,28 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4 bg-surface/80 backdrop-blur-xl border-b border-white/10' : 'py-6 bg-transparent'}`}>
-      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center">
-        <a href="#home" className="flex items-center gap-3">
-          <Image src="/Profile.png" alt="Roushan Mourya" width={40} height={40} className="rounded-full object-cover ring-2 ring-primary" priority />
-          <span className="font-display-lg text-primary tracking-tighter drop-shadow-[0_0_8px_rgba(208,188,255,0.4)] text-[18px] hidden md:inline">Roushan</span>
-        </a>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'py-2.5 bg-surface/90 backdrop-blur-xl border-b border-white/10 shadow-lg' 
+        : 'py-3.5 bg-surface/40 backdrop-blur-md border-b border-white/5'
+    }`}>
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row md:justify-between md:items-center gap-2 md:gap-0">
+        <div className="flex justify-between items-center w-full md:w-auto">
+          <a href="#home" className="flex items-center gap-3">
+            <Image src="/Profile.png" alt="Roushan Mourya" width={38} height={38} className="rounded-full object-cover ring-2 ring-primary/80 shrink-0" priority />
+            <span className="font-display-lg text-primary tracking-tighter drop-shadow-[0_0_8px_rgba(208,188,255,0.4)] text-[16px] md:text-[18px] inline-block font-semibold">Roushan</span>
+          </a>
+          
+          <button 
+            className="md:hidden text-primary p-2 focus:outline-none flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 active:scale-95 transition-all"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
+        </div>
         
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex gap-8 items-center">
           {navLinks.map((link) => (
             <a 
@@ -46,23 +61,29 @@ export default function Navbar() {
           ))}
         </div>
 
-        <button 
-          className="md:hidden text-primary"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
+        {/* Mobile Swipeable Direct Options (Directly visible!) */}
+        <div className="flex md:hidden items-center gap-3 overflow-x-auto scrollbar-none w-full py-1.5 border-t border-white/5 mt-1 justify-start">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name}
+              href={link.href}
+              className="text-on-surface-variant hover:text-primary transition-all duration-300 font-label-caps text-[11px] whitespace-nowrap py-1.5 px-3 rounded-lg bg-white/5 border border-white/5 active:bg-white/10"
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Fallback Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-surface-container/95 backdrop-blur-xl border-b border-white/10 py-4 px-margin-mobile md:hidden flex flex-col gap-4 shadow-xl">
+        <div className="absolute top-full left-0 w-full bg-surface-container/95 backdrop-blur-2xl border-b border-white/10 py-5 px-margin-mobile md:hidden flex flex-col gap-3 shadow-2xl">
           {navLinks.map((link) => (
             <a 
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps py-2"
+              className="text-on-surface-variant hover:text-primary hover:bg-white/5 transition-all duration-200 font-label-caps text-label-caps py-2.5 px-4 rounded-xl"
             >
               {link.name}
             </a>

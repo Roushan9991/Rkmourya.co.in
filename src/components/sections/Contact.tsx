@@ -5,6 +5,15 @@ import { Mail, Send, FileText } from 'lucide-react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { useState } from 'react';
 
+const readFileAsBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function Contact() {
   const [service, setService] = useState('Resume Website');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,27 +25,70 @@ export default function Contact() {
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    formData.append('_subject', 'Quote Request from Website');
+
+    // Construct JSON payload from Form Data
+    const payload: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      // Skip file objects initially
+      if (!(value instanceof File)) {
+        payload[key] = value;
+      }
+    });
+
+    // Check if there is a file input and if a file was uploaded
+    const resumeFileInput = form.querySelector('#resume') as HTMLInputElement | null;
+    if (resumeFileInput && resumeFileInput.files && resumeFileInput.files[0]) {
+      const file = resumeFileInput.files[0];
+      try {
+        const base64Data = await readFileAsBase64(file);
+        payload['fileData'] = base64Data;
+        payload['fileName'] = file.name;
+        payload['fileType'] = file.type;
+      } catch (fileError) {
+        console.error("Error reading file:", fileError);
+        alert("Failed to process the uploaded resume. Please try another file.");
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    // Google Apps Script Web App URL from environment variables or direct placeholder
+    const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+
+    if (!endpoint || endpoint === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      console.error("Google Apps Script endpoint is not set. Please set NEXT_PUBLIC_FORM_ENDPOINT in your environment or code.");
+      alert("Submission endpoint is not configured. Please ensure NEXT_PUBLIC_FORM_ENDPOINT is set in your .env.local file in the 'rkm-portfolio' directory and that you have restarted the dev server!");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/rkmourya999@gmail.com', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Content-Type': 'text/plain;charset=utf-8', // Google Apps Script handles text/plain without triggering complex CORS preflight issues
         },
-        body: formData,
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.status !== "error") {
         setIsSubmitted(true);
         form.reset();
         setService('Resume Website');
         setTimeout(() => setIsSubmitted(false), 5000);
       } else {
-        alert('Something went wrong. Please try again.');
+        console.error('Form submission error:', response.status, result);
+        if (endpoint === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+          alert('Submission endpoint is not configured. Please set up your Google Apps Script URL as described in the instructions!');
+        } else {
+          alert(result?.message || 'A server error occurred. Please try again later.');
+        }
       }
-    } catch {
-      alert('Something went wrong. Please try again.');
+    } catch (error) {
+      console.error('Form submission failed:', error);
+      alert('Unable to submit. Please ensure your Google Apps Script is deployed and the URL is correct.');
     } finally {
       setIsSubmitting(false);
     }
@@ -45,11 +97,11 @@ export default function Contact() {
   return (
     <section id="contact" className="py-40 relative">
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[150px] rounded-full z-0 pointer-events-none"></div>
-      
+
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -61,11 +113,11 @@ export default function Contact() {
                 Ready to transform your data?
               </h2>
             </div>
-            
+
             <p className="text-body-lg text-on-surface-variant max-w-md">
-              Whether you already have a project in mind, want to turn an idea into something practical, or are curious about what AI and analytics can do for your business - I&apos;d love to hear from you.<br/><br/>I enjoy solving real problems that create measurable impact, not just producing another report or dashboard.
-              
-              <br/><br/>Reach out for collaboration, project planning, feedback, or simply a thoughtful conversation.
+              Whether you already have a project in mind, want to turn an idea into something practical, or are curious about what AI and analytics can do for your business - I&apos;d love to hear from you.<br /><br />I enjoy solving real problems that create measurable impact, not just producing another report or dashboard.
+
+              <br /><br />Reach out for collaboration, project planning, feedback, or simply a thoughtful conversation.
             </p>
 
             <div className="flex flex-col gap-6 mt-8">
@@ -78,7 +130,7 @@ export default function Contact() {
                   <span className="font-body-md font-medium">rkmourya999@gmail.com</span>
                 </div>
               </a>
-              
+
               <div className="flex gap-4 mt-4">
                 <a href="https://www.linkedin.com/in/roushan-kumar-mourya-001668196" className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-secondary hover:border-secondary/50 transition-all">
                   <FaLinkedin className="w-5 h-5" />
@@ -452,7 +504,7 @@ export default function Contact() {
               </button>
             </form>
           </motion.div>
-          
+
         </div>
       </div>
     </section>

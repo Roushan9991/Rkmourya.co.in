@@ -125,6 +125,31 @@ export default function SkillsVisualizer() {
     return <div className="w-full h-[500px] md:h-[600px] relative" />;
   }
 
+  if (isMobile) {
+    return (
+      <div className="w-full min-h-[400px] flex flex-wrap gap-4 items-center justify-center p-6 bg-surface-container-lowest/30 rounded-2xl border border-white/5 relative overflow-hidden">
+        {/* Glow backing orbs for visual aesthetic */}
+        <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
+        
+        {skills.map((skill) => (
+          <div 
+            key={skill.name}
+            style={{ 
+              borderColor: `${skill.color}25`, 
+              boxShadow: `0 4px 20px ${skill.color}08, inset 0 1px 1px rgba(255,255,255,0.05)` 
+            }}
+            className="px-5 py-3 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 group relative overflow-hidden"
+          >
+            {/* Subtle glow border effect */}
+            <span style={{ backgroundColor: skill.color }} className="w-2 h-2 rounded-full inline-block animate-pulse shrink-0" />
+            <span className="font-label-caps text-xs text-on-surface font-semibold tracking-wider relative z-10">{skill.name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-[500px] md:h-[600px] relative">
       <ErrorBoundary>

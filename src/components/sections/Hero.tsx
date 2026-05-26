@@ -74,10 +74,6 @@ export default function Hero() {
             <Download className="w-4 h-4" />
             Resume
           </a>
-          <a href="#contact" className="flex items-center gap-2 px-8 py-4 rounded-full text-on-surface hover:text-secondary transition-all font-body-md font-bold hover:bg-surface-bright/50 backdrop-blur-sm">
-            <Mail className="w-4 h-4" />
-            Contact Me
-          </a>
         </motion.div>
       </div>
 

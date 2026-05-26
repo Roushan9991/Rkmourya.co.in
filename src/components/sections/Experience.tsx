@@ -86,7 +86,7 @@ export default function Experience() {
                 </div>
                   {exp.company === "DARWINBOX" ? (
                     <Image 
-                      src="/darwinbox.svg" 
+                      src="/darwinbox.png" 
                       alt="Darwinbox Logo" 
                       width={40} 
                       height={20}
@@ -98,7 +98,7 @@ export default function Experience() {
                       alt="ITC Logo"
                       width={120}
                       height={60}
-                      className="h-20 w-50 shrink-0 object-contain mix-blend-screen"
+                      className="h-20 w-20 shrink-0"
                     />
                   ) : (
                     <Briefcase className="w-12 h-12 text-white/10 group-hover:text-primary transition-all duration-500 hidden sm:block" />
