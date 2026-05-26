@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
   body {
-    @apply bg-background text-on-surface overflow-x-hidden font-body-md selection:bg-primary/30;
+    @apply bg-background text-on-surface font-body-md selection:bg-primary/30;
   }
 }
 

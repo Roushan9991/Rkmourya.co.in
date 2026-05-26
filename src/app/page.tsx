@@ -21,7 +21,7 @@ export default function Home() {
       
       <Navbar />
       
-      <main className="relative z-10">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
         <Hero />
         <About />
         <Experience />

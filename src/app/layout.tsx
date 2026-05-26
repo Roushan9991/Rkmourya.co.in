@@ -31,9 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth overflow-x-hidden max-w-full">
       <body
-        className={`${sora.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased font-body-md`}
+        className={`${sora.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased font-body-md overflow-x-hidden max-w-full`}
       >
         {children}
       </body>
