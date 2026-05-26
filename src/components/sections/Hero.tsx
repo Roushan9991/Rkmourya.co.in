@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { ArrowRight, Download, Mail } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 
 const HeroVisualizer = dynamic(() => import('../3d/HeroVisualizer'), {
   ssr: false,

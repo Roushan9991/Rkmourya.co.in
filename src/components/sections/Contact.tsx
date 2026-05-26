@@ -27,7 +27,7 @@ export default function Contact() {
     const formData = new FormData(form);
 
     // Construct JSON payload from Form Data
-    const payload: Record<string, any> = {};
+    const payload: Record<string, string | number | boolean | null | undefined> = {};
     formData.forEach((value, key) => {
       // Skip file objects initially
       if (!(value instanceof File)) {

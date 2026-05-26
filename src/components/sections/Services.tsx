@@ -57,6 +57,7 @@ export default function Services() {
               className="glass-panel rounded-xl border border-white/10 shadow-xl overflow-hidden flex flex-col"
             >
               <div className="relative h-40 w-full overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
               </div>
