@@ -5,7 +5,7 @@ import { Monitor, Cpu, Zap, BarChart2 } from 'lucide-react';
 
 const services = [
   {
-    title: 'Resume Websites for Students',
+    title: 'Resume Websites for Students/Professionals',
     desc: 'Tailored portfolio websites that showcase your skills, projects, and personal brand with polished UI and fast performance.',
     help: 'I build resume sites that highlight your career story, help you stand out in interviews, and make your work easy to explore across devices.',
     image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80',
@@ -28,7 +28,7 @@ const services = [
   {
     title: 'PowerBI / Tableau Dashboards',
     desc: 'Interactive dashboards and analytics reports that make insights visible and actionable across your team.',
-    help: 'I deliver dashboards that expose quality, quantity, and rejection trends clearly, helping stakeholders make faster procurement and performance decisions.',
+    help: 'I deliver dashboards that provide real-time visibility into your business performance and help drive data-informed decisions.',
     image: '/powerbi.jpg',
     icon: <BarChart2 className="w-5 h-5 text-accent" />,
   },
