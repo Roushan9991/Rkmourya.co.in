@@ -1,173 +1,103 @@
 "use client";
 
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial, OrbitControls, Html } from '@react-three/drei';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import * as THREE from 'three';
-import ErrorBoundary from '../ErrorBoundary';
+import { motion } from 'framer-motion';
+import { Database, TrendingUp, BarChart3, Star } from 'lucide-react';
 
-const skills = [
-  { name: 'Python', color: '#dbb8ff' },
-  { name: 'SQL', color: '#5de6ff' },
-  { name: 'Power BI', color: '#a078ff' },
-  { name: 'Excel', color: '#00cbe6' },
-  { name: 'DAX', color: '#d0bcff' },
-  { name: 'Machine Learning', color: '#6d3bd7' },
-  { name: 'Data Analytics', color: '#efdbff' },
-  { name: 'Statistics', color: '#5de6ff' },
-  { name: 'Powerpoint', color: '#dbb8ff' },
-  { name: 'Tableau', color: '#a078ff' },
-  { name: 'R Programming', color: '#00cbe6' },
-  { name: 'NLP', color: '#6d3bd7' }
+const categories = [
+  {
+    title: "Analytics & ML",
+    icon: <TrendingUp className="w-5 h-5 text-secondary" />,
+    skills: [
+      { name: 'Machine Learning', level: 'Advanced' },
+      { name: 'Data Analytics', level: 'Expert' },
+      { name: 'Statistics', level: 'Advanced' },
+      { name: 'NLP', level: 'Intermediate' },
+      { name: 'R Programming', level: 'Intermediate' },
+      { name: 'MATLAB', level: 'Intermediate' }
+    ],
+    bgGlow: 'from-secondary/5 to-transparent'
+  },
+  {
+    title: "Business Intelligence",
+    icon: <BarChart3 className="w-5 h-5 text-primary" />,
+    skills: [
+      { name: 'Power BI', level: 'Expert' },
+      { name: 'Tableau', level: 'Advanced' },
+      { name: 'DAX', level: 'Expert' },
+      { name: 'Excel', level: 'Expert' },
+      { name: 'Powerpoint', level: 'Advanced' }
+    ],
+    bgGlow: 'from-primary/5 to-transparent'
+  },
+  {
+    title: "Data Management & Dev",
+    icon: <Database className="w-5 h-5 text-emerald-400" />,
+    skills: [
+      { name: 'SQL', level: 'Expert' },
+      { name: 'Python', level: 'Expert' },
+      { name: 'JIRA', level: 'Intermediate' }
+    ],
+    bgGlow: 'from-emerald-400/5 to-transparent'
+  }
 ];
 
-interface Skill {
-  name: string;
-  color: string;
-}
-
-function OrbitingNode({ skill, position }: { skill: Skill, position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      <mesh>
-        <sphereGeometry args={[0.18, 12, 12]} />
-        <meshStandardMaterial color={skill.color} emissive={skill.color} emissiveIntensity={1} />
-      </mesh>
-      <Html distanceFactor={10} zIndexRange={[100, 0]} center>
-        <div className="bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 whitespace-nowrap">
-          <span className="font-label-caps text-[10px] md:text-xs text-white drop-shadow-md">{skill.name}</span>
-        </div>
-      </Html>
-    </group>
-  );
-}
-
-function CoreSphere() {
-  const sphereRef = useRef<THREE.Mesh>(null);
-
-  useFrame(({ clock }) => {
-    if (sphereRef.current) {
-      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.4;
-      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.4;
-    }
-  });
-
-  return (
-    <Sphere ref={sphereRef} args={[0.8, 16, 16]}>
-      <MeshDistortMaterial
-        color="#3c0091"
-        attach="material"
-        distort={0.6}
-        speed={3}
-        roughness={0}
-        metalness={1}
-        emissive="#3c0091"
-        emissiveIntensity={2}
-      />
-    </Sphere>
-  );
-}
-
-function RotatingSkillGroup({ positions }: { positions: [number, number, number][] }) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame(({ clock }) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      {skills.map((skill, index) => (
-        <OrbitingNode key={skill.name} skill={skill} position={positions[index]} />
-      ))}
-    </group>
-  );
-}
-
 export default function SkillsVisualizer() {
-  const [isReady, setIsReady] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [pixelRatio, setPixelRatio] = useState(1);
-
-  useEffect(() => {
-    setIsReady(true);
-
-    const match = window.matchMedia('(max-width: 767.98px)');
-    const update = () => {
-      setIsMobile(match.matches);
-      setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    };
-
-    update();
-    match.addEventListener('change', update);
-    return () => match.removeEventListener('change', update);
-  }, []);
-
-  const positions = useMemo(() => {
-    const total = skills.length;
-    const radius = 3;
-
-    return skills.map((_, index) => {
-      const phi = Math.acos(-1 + (2 * index) / total);
-      const theta = Math.sqrt(total * Math.PI) * phi;
-
-      return [
-        radius * Math.cos(theta) * Math.sin(phi),
-        radius * Math.sin(theta) * Math.sin(phi),
-        radius * Math.cos(phi),
-      ] as [number, number, number];
-    });
-  }, []);
-
-  if (!isReady) {
-    return <div className="w-full h-[500px] md:h-[600px] relative" />;
-  }
-
-  if (isMobile) {
-    return (
-      <div className="w-full min-h-[400px] flex flex-wrap gap-4 items-center justify-center p-6 bg-surface-container-lowest/30 rounded-2xl border border-white/5 relative overflow-hidden">
-        {/* Glow backing orbs for visual aesthetic */}
-        <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-        
-        {skills.map((skill) => (
-          <div 
-            key={skill.name}
-            style={{ 
-              borderColor: `${skill.color}25`, 
-              boxShadow: `0 4px 20px ${skill.color}08, inset 0 1px 1px rgba(255,255,255,0.05)` 
-            }}
-            className="px-5 py-3 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 group relative overflow-hidden"
-          >
-            {/* Subtle glow border effect */}
-            <span style={{ backgroundColor: skill.color }} className="w-2 h-2 rounded-full inline-block animate-pulse shrink-0" />
-            <span className="font-label-caps text-xs text-on-surface font-semibold tracking-wider relative z-10">{skill.name}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full h-[500px] md:h-[600px] relative">
-      <ErrorBoundary>
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 50 }}
-          dpr={pixelRatio}
-          gl={{ antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left w-full">
+      {categories.map((category, catIdx) => (
+        <motion.div
+          key={category.title}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: catIdx * 0.15 }}
+          className="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-950/45 p-6 hover:border-white/10 transition-all duration-300 group flex flex-col justify-between"
         >
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 5]} intensity={1} />
-          
-          <CoreSphere />
-          
-          <RotatingSkillGroup positions={positions} />
-          
-          <OrbitControls enableZoom={false} enableRotate={!isMobile} autoRotate={!isMobile} autoRotateSpeed={0.5} />
-        </Canvas>
-      </ErrorBoundary>
+          {/* Subtle Ambient Background Gradient */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${category.bgGlow} opacity-30 pointer-events-none`} />
+
+          <div className="relative z-10 space-y-5">
+            {/* Category Header */}
+            <div className="flex items-center gap-3 pb-3 border-b border-white/5">
+              <div className="p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-colors">
+                {category.icon}
+              </div>
+              <h3 className="font-body-lg font-bold text-slate-200 tracking-tight">{category.title}</h3>
+            </div>
+
+            {/* Skills Tag List */}
+            <div className="flex flex-wrap gap-2.5">
+              {category.skills.map((skill) => (
+                <motion.div
+                  key={skill.name}
+                  whileHover={{ scale: 1.03, translateY: -1 }}
+                  className="px-3.5 py-2 rounded-xl bg-slate-950/60 border border-white/5 hover:border-slate-700/60 transition-colors flex items-center gap-2 group/tag cursor-default"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 group-hover/tag:bg-primary transition-colors shrink-0" />
+                  <span className="font-body-md text-xs font-medium text-slate-300 group-hover/tag:text-slate-100 transition-colors">{skill.name}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom decorative stats bar matching the BA role */}
+          <div className="mt-8 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-label-caps text-slate-500 tracking-wider relative z-10">
+            <span>TECHNICAL CAPABILITY</span>
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star 
+                  key={s} 
+                  className={`w-2.5 h-2.5 ${
+                    s <= (catIdx === 0 ? 4 : catIdx === 1 ? 5 : 5) 
+                      ? 'text-primary fill-primary/30' 
+                      : 'text-slate-700'
+                  }`} 
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }

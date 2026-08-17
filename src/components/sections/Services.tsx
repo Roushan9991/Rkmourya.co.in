@@ -36,42 +36,44 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-40 bg-surface/5 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+    <section id="services" className="py-32 bg-slate-950/25 relative border-y border-white/[0.02]">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
-        <div className="text-center mb-12">
-          <span className="font-label-caps text-label-caps text-secondary block mb-4 tracking-widest">SERVICES</span>
-          <p className="font-body-md text-on-surface-variant max-w-2xl mx-auto mt-4 text-center">
+        <div className="text-center mb-16">
+          <span className="font-label-caps text-xs text-secondary block tracking-wider font-semibold mb-2">SERVICES</span>
+          <h2 className="font-display-lg text-2xl md:text-3xl font-bold text-slate-100 tracking-tight">Analytics Solutions</h2>
+          <p className="font-body-md text-slate-400 max-w-xl mx-auto mt-3 text-center text-sm md:text-base leading-relaxed">
             I help students and businesses build modern web presence, predictive models, automation agents, and analytics dashboards that deliver measurable impact.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {services.map((service) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-panel rounded-xl border border-white/10 shadow-xl overflow-hidden flex flex-col"
+              transition={{ duration: 0.5 }}
+              className="group relative overflow-hidden rounded-2xl glass-panel border-white/5 hover:border-primary/20 shadow-2xl flex flex-col h-full transition-all duration-350"
             >
-              <div className="relative h-40 w-full overflow-hidden">
+              <div className="relative h-36 w-full overflow-hidden bg-slate-950/40">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover opacity-75 group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
               </div>
 
-              <div className="p-6 flex flex-col gap-4 flex-1">
-                <div className="inline-flex items-center gap-3 rounded-full bg-surface-bright/50 px-3 py-2 text-sm text-on-surface-variant">
-                  <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">{service.icon}</span>
-                  <span className="font-body-lg font-semibold text-on-surface">{service.title}</span>
+              <div className="p-5 flex flex-col gap-4 flex-grow">
+                <div className="inline-flex items-center gap-2.5 rounded-lg bg-white/[0.02] border border-white/5 px-2.5 py-1.5 text-xs text-slate-300">
+                  <span className="w-6 h-6 rounded-md bg-white/[0.04] flex items-center justify-center shrink-0">{service.icon}</span>
+                  <span className="font-body-lg font-bold text-slate-200">{service.title.split(" - ")[0]}</span>
                 </div>
-                <p className="font-body-md text-on-surface">{service.desc}</p>
-                <p className="font-body-sm text-on-surface-variant">{service.help}</p>
+                <p className="text-sm text-slate-300 font-medium leading-relaxed">{service.desc}</p>
+                <p className="text-xs text-slate-500 leading-relaxed flex-grow">{service.help}</p>
 
-                <div className="mt-auto pt-4 border-t border-white/10">
-                  <a href="#contact" className="text-primary font-medium hover:text-secondary transition-colors">Get a Quote</a>
+                <div className="mt-4 pt-4 border-t border-white/5">
+                  <a href="#contact" className="text-xs font-semibold text-primary hover:text-secondary transition-colors inline-flex items-center gap-1 font-label-caps tracking-wider">
+                    Get a Quote &rarr;
+                  </a>
                 </div>
               </div>
             </motion.div>

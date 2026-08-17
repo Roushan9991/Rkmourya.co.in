@@ -19,24 +19,25 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Services', href: '#services' },
+    { name: 'Recognition', href: '#achievements' },
     { name: 'Contact', href: '#contact' },
   ];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 w-full max-w-full z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'py-3 bg-surface/95 backdrop-blur-xl border-b border-white/10 shadow-lg' 
+        ? 'py-3 bg-surface/95 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/40' 
         : 'py-4 bg-surface/80 backdrop-blur-md border-b border-white/5'
     }`}>
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center">
         {/* Left branding: Always stable and visible Profile Image and Name */}
         <a href="#home" className="flex items-center gap-3">
-          <Image src="/Profile.png" alt="Roushan Mourya" width={38} height={38} className="rounded-full object-cover ring-2 ring-primary/80 shrink-0" priority />
-          <span className="font-display-lg text-primary tracking-tighter drop-shadow-[0_0_8px_rgba(208,188,255,0.4)] text-[16px] md:text-[18px] inline-block font-semibold">Roushan</span>
+          <Image src="/Profile.png" alt="Roushan Mourya" width={38} height={38} className="rounded-full object-cover ring-2 ring-primary/60 shrink-0" priority />
+          <span className="font-display-lg text-primary tracking-tighter drop-shadow-[0_0_8px_rgba(59,130,246,0.3)] text-[16px] md:text-[18px] inline-block font-semibold">Roushan</span>
         </a>
         
         {/* Desktop Links (Hidden on Mobile) */}

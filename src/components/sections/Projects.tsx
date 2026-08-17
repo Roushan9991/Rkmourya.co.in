@@ -64,18 +64,18 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-40 bg-surface-container-lowest/30 relative">
+    <section id="projects" className="py-32 bg-slate-950/20 relative">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
           <motion.h2 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="font-headline-md text-on-surface"
+            className="font-display-lg text-2xl md:text-3xl font-bold text-slate-100 tracking-tight"
           >
-            Projects
+            Featured Projects
           </motion.h2>
-          <div className="h-[1px] flex-grow bg-outline-variant/30 mx-8 hidden md:block"></div>
+          <div className="h-[1px] flex-grow bg-white/5 mx-8 hidden md:block"></div>
           <motion.a 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -83,54 +83,52 @@ export default function Projects() {
             href="https://github.com/Roushan9991" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2"
+            className="font-label-caps text-xs text-slate-400 hover:text-primary transition-colors flex items-center gap-2 tracking-wider"
           >
-            VIEW ALL ON GITHUB <ExternalLink className="w-4 h-4" />
+            VIEW ALL ON GITHUB <ExternalLink className="w-3.5 h-3.5" />
           </motion.a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-xl glass-panel border-primary/20 hover:border-primary transition-all duration-500 flex flex-col h-full"
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="group relative overflow-hidden rounded-2xl glass-panel border-white/5 hover:border-primary/20 transition-all duration-350 flex flex-col h-full"
             >
-              <div className="h-60 overflow-hidden relative bg-surface-variant/50 flex items-center justify-center">
-                {/* Fallback color while image loads */}
-                <div className="absolute inset-0 bg-surface-variant animate-pulse"></div>
+              <div className="h-56 overflow-hidden relative bg-slate-950/65 flex items-center justify-center p-4">
+                <div className="absolute inset-0 bg-slate-950 opacity-40 animate-pulse pointer-events-none"></div>
                 <Image 
                   src={project.image} 
                   alt={project.title} 
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-contain group-hover:scale-105 transition-transform duration-700 relative z-10 p-4"
+                  className="object-contain group-hover:scale-[1.025] transition-transform duration-500 relative z-10 p-2"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent z-20 opacity-30 pointer-events-none"></div>
               </div>
               
-              <div className="p-8 space-y-4 flex-grow flex flex-col">
-                <span className="font-label-caps text-[10px] text-secondary tracking-widest">{project.category}</span>
-                <h3 className="font-body-lg font-bold text-on-surface group-hover:text-primary transition-colors">{project.title}</h3>
-                <p className="text-body-md text-on-surface-variant flex-grow">{project.description}</p>
+              <div className="p-6 md:p-7 space-y-4 flex-grow flex flex-col">
+                <span className="font-label-caps text-[9px] text-secondary tracking-widest font-semibold">{project.category}</span>
+                <h3 className="font-body-lg font-bold text-slate-200 group-hover:text-primary transition-colors line-clamp-1">{project.title}</h3>
+                <p className="text-sm text-slate-400 flex-grow leading-relaxed line-clamp-3">{project.description}</p>
                 
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="flex flex-wrap gap-1.5 pt-2">
                   {project.tech.map(tech => (
-                    <span key={tech} className="text-xs font-label-caps text-primary-fixed bg-primary/10 px-2 py-1 rounded-md border border-primary/20">
+                    <span key={tech} className="text-[10px] font-medium text-slate-400 bg-white/[0.03] border border-white/5 px-2.5 py-1 rounded-md">
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-4 mt-6 pt-6 border-t border-white/10">
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:text-primary transition-colors">
+                <div className="flex gap-4 mt-6 pt-5 border-t border-white/5">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-primary transition-colors">
                     <FaGithub className="w-5 h-5" />
                   </a>
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:text-secondary transition-colors ml-auto flex items-center gap-1 font-label-caps text-xs">
-                    LIVE Demo <ArrowRight className="w-4 h-4" />
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-secondary transition-colors ml-auto flex items-center gap-1 font-label-caps text-xs tracking-wider">
+                    LIVE Demo <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>

@@ -12,16 +12,9 @@ import Services from '@/components/sections/Services';
 export default function Home() {
   return (
     <>
-      {/* Ambient Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="floating-orb w-[500px] h-[500px] bg-primary top-[-10%] left-[-10%]"></div>
-        <div className="floating-orb w-[600px] h-[600px] bg-secondary bottom-[-20%] right-[-10%]"></div>
-        <div className="floating-orb w-[400px] h-[400px] bg-tertiary-container top-[40%] right-[20%]"></div>
-      </div>
-      
       <Navbar />
       
-      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden bg-background">
         <Hero />
         <About />
         <Experience />

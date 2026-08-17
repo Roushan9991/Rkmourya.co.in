@@ -16,24 +16,19 @@
 
 @layer components {
   .glass-panel {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(11, 15, 25, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
   
-  .neon-glow-violet {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  .premium-border {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   
-  .neon-glow-cyan {
-    box-shadow: 0 0 20px rgba(0, 203, 230, 0.3);
-  }
-  
-  .floating-orb {
-    position: absolute;
-    filter: blur(100px);
-    z-index: -1;
-    opacity: 0.4;
+  .premium-border:hover {
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.05);
   }
 }
 
