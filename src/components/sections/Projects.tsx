@@ -7,9 +7,18 @@ import Image from 'next/image';
 
 const projects = [
   {
+    title: "Symptom-Based Disease Prediction Using Machine Learning",
+    category: "MACHINE LEARNING",
+    description: "Developed a machine learning model that predicts diseases based on symptoms using Python and Scikit-Learn and deployed as a web application for real-time predictions.",
+    image: "/ML APP Interface.png",
+    tech: ["Python (Pandas)","Machine Learning","Exploratory Data Analysis","Principal Component Analysis","Feature Engineering"],
+    github: "https://github.com/Roushan9991/Disease-Prediction-from-Symptoms-using-Machine-Learning",
+    live: "https://disease-prediction-from-symptoms-us.vercel.app/"
+  }, 
+  {
     title: "Automated Weather Intelligence Dashboard",
     category: "AUTOMATION & DASHBOARDING",
-    description: "Built a Power BI-based smart weather dashboard with automated hourly API refresh that delivers real-time weather insights along with personalized day-planning recommendations and outdoor activity suggestions.",
+    description: "Built a Power BI-based smart weather dashboard with automated hourly API refresh that delivers real-time weather insights.",
     image: "/Powerbi_dashboard.jpg",
     tech: ["Power BI", "DAX", "Weather API","Power Query (M Language)","ETL Automation","Data Modeling"],
     github: "https://github.com/Roushan9991/Automated-Weather-Intelligence-Dashboard/blob/main/README.md",
@@ -18,7 +27,7 @@ const projects = [
   {
     title: "Wildfire Risk Prediction using Ridge Regression",
     category: "PREDICTIVE ANALYTICS",
-    description: "An end-to-end Machine Learning project that predicts wildfire risk from environmental and fire weather indicators. Built using Python, Flask, and Ridge Regression with real-time prediction capability and cloud deployment on Vercel.",
+    description: "An end-to-end Machine Learning project that predicts wildfire risk from environmental and fire weather indicators.",
     image: "/widfire prediction.jpg",
     tech: ["Python", "Scikit-Learn", "Pandas","Ridge Regression","Jupyter Notebook","StandardScaler","Model Evaluation","Vercel","GitHub"],
     github: "https://github.com/Roushan9991/Wildfire-Risk-Prediction-using-Ridge-Regression/blob/main/README.md",
@@ -27,7 +36,7 @@ const projects = [
   {
     title: "Student Performance Predictor | End-to-End Machine Learning Pipeline",
     category: "PREDICTIVE ANALYTICS",
-    description: "Built an end-to-end Machine Learning pipeline to predict student math scores using demographic and academic factors with automated data ingestion, transformation, model training, evaluation, and deployment.",
+    description: "Built an end-to-end Machine Learning pipeline to predict student math scores using demographic and academic factors.",
     image: "/ML Prediction.jpg",
     tech: ["Python", "Scikit-Learn", "Pandas","Linear Regression","Random Forest","Decision Tree Regressor","Model Deployment","Flask","AWS Elastic Beanstalk","GitHub"],
     github: "https://github.com/Roushan9991/Student-Performance-Predictor-End-to-End-Machine-Learning-Pipeline/blob/main/README.md",
